@@ -2,6 +2,8 @@
 
 Starter ERP project for BongoTex, built with modern .NET.
 
+For a full breakdown of layers, modules, API routes, and data flows, see **[ARCHITECTURE.md](ARCHITECTURE.md)**.
+
 ## What is included
 
 - `src/BongoTex.Api`: ASP.NET Core minimal API endpoints
