@@ -1,0 +1,202 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+    <CoreCompileDependsOn>EnsureUtf8PipelineEntitySources;$(CoreCompileDependsOn)</CoreCompileDependsOn>
+  </PropertyGroup>
+
+  <!-- BuildSnippets -> Entities as UTF-8. BOM / UTF-16-LE ASCII prefix only; embedded fallback if decode still looks corrupt. -->
+  <UsingTask TaskName="EnsurePipelineEntitiesUtf8" TaskFactory="RoslynCodeTaskFactory"
+             AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <CoreRoot ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Text" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+const string CuttingEntryCanonical = """
+namespace BongoTex.Core.Entities;
+
+/// <summary>Cutting section: fabric used and pieces cut for an inventory style; feeds sewing WIP.</summary>
+public class CuttingEntry
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public string CuttingNo { get; set; } = string.Empty;
+    public Guid FactorySiteId { get; set; }
+    public string CutLotCode { get; set; } = string.Empty;
+    public Guid? InventoryItemId { get; set; }
+    public Guid? RawMaterialId { get; set; }
+    public int QuantityCut { get; set; }
+    public decimal FabricKg { get; set; }
+    public decimal FabricPricePerKg { get; set; }
+    public decimal FabricAmount { get; set; }
+    public DateTime CutAtUtc { get; set; } = DateTime.UtcNow;
+}
+""";
+
+const string SewingEntryCanonical = """
+namespace BongoTex.Core.Entities;
+
+/// <summary>Sewing section: pieces sewn per day per item.</summary>
+public class SewingEntry
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public string SewingNo { get; set; } = string.Empty;
+    public Guid FactorySiteId { get; set; }
+    public Guid InventoryItemId { get; set; }
+    public int QuantitySewn { get; set; }
+    public DateTime SewnAtUtc { get; set; } = DateTime.UtcNow;
+}
+""";
+
+const string FinishingEntryCanonical = """
+namespace BongoTex.Core.Entities;
+
+/// <summary>Finishing section: pieces finished per day per item.</summary>
+public class FinishingEntry
+{
+    public Guid Id { get; set; } = Guid.NewGuid();
+    public string FinishingNo { get; set; } = string.Empty;
+    public Guid FactorySiteId { get; set; }
+    public Guid InventoryItemId { get; set; }
+    public int QuantityFinished { get; set; }
+    public DateTime FinishedAtUtc { get; set; } = DateTime.UtcNow;
+}
+""";
+
+bool LooksUtf16LeAsciiPrefix(byte[] b, int off)
+{
+    int avail = b.Length - off;
+    int pairs = Math.Min(12, avail / 2);
+    if (pairs < 4) return false;
+
+    for (int i = 0; i < pairs; i++)
+    {
+        if (b[off + 2 * i + 1] != 0) return false;
+        if (b[off + 2 * i] > 127) return false;
+    }
+
+    return true;
+}
+
+string ReadTextSmart(string path)
+{
+    byte[] bytes = File.ReadAllBytes(path);
+    if (bytes.Length == 0) return string.Empty;
+
+    if (bytes.Length >= 2 && bytes[0] == 0xFF && bytes[1] == 0xFE)
+        return Encoding.Unicode.GetString(bytes, 2, bytes.Length - 2);
+
+    if (bytes.Length >= 2 && bytes[0] == 0xFE && bytes[1] == 0xFF)
+        return Encoding.BigEndianUnicode.GetString(bytes, 2, bytes.Length - 2);
+
+    int offset = 0;
+    if (bytes.Length >= 3 && bytes[0] == 0xEF && bytes[1] == 0xBB && bytes[2] == 0xBF)
+        offset = 3;
+
+    if (LooksUtf16LeAsciiPrefix(bytes, offset))
+    {
+        int rem = bytes.Length - offset;
+        rem -= rem % 2;
+        if (rem >= 2)
+            return Encoding.Unicode.GetString(bytes, offset, rem);
+    }
+
+    var utf8 = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
+    return utf8.GetString(bytes, offset, bytes.Length - offset);
+}
+
+bool LooksCorrupt(string s)
+{
+    int n = Math.Min(s.Length, 800);
+    for (int i = 0; i < n; i++)
+    {
+        if (s[i] == '\0' || s[i] == '\uFFFD')
+            return true;
+    }
+
+    return false;
+}
+
+string CanonicalFor(string fileName)
+{
+    switch (fileName)
+    {
+        case "CuttingEntry.cs": return CuttingEntryCanonical;
+        case "SewingEntry.cs": return SewingEntryCanonical;
+        case "FinishingEntry.cs": return FinishingEntryCanonical;
+        default: return string.Empty;
+    }
+}
+
+void WriteUtf8NoBom(string path, string text)
+{
+    if (File.Exists(path))
+    {
+        FileAttributes fa = File.GetAttributes(path);
+        if ((fa & FileAttributes.ReadOnly) != 0)
+            File.SetAttributes(path, fa & ~FileAttributes.ReadOnly);
+    }
+
+    var utf8 = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
+    File.WriteAllText(path, text, utf8);
+}
+
+try
+{
+    foreach (string name in new[] { "CuttingEntry.cs", "SewingEntry.cs", "FinishingEntry.cs" })
+    {
+        string src = Path.Combine(CoreRoot, "BuildSnippets", name);
+        if (!File.Exists(src))
+        {
+            Log.LogError("Missing pipeline snippet: {0}", src);
+            return false;
+        }
+
+        string dest = Path.Combine(CoreRoot, "Entities", name);
+        string text = ReadTextSmart(src);
+        if (LooksCorrupt(text))
+            text = CanonicalFor(name);
+
+        WriteUtf8NoBom(dest, text);
+    }
+
+    return true;
+}
+catch (Exception ex)
+{
+    Log.LogErrorFromException(ex);
+    return false;
+}
+]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <ItemGroup>
+    <Compile Remove="BuildSnippets\**\*.cs" />
+    <None Include="BuildSnippets\CuttingEntry.cs" />
+    <None Include="BuildSnippets\SewingEntry.cs" />
+    <None Include="BuildSnippets\FinishingEntry.cs" />
+  </ItemGroup>
+
+  <Target Name="EnsureUtf8PipelineEntitySources"
+          BeforeTargets="CoreCompile"
+          Condition="'$(DisableEnsureUtf8PipelineEntitySources)' != 'true'">
+    <PropertyGroup>
+      <_SnippetRoot>$(MSBuildThisFileDirectory)BuildSnippets</_SnippetRoot>
+    </PropertyGroup>
+    <Error Text="Missing $(_SnippetRoot)\SewingEntry.cs — add BuildSnippets from repo."
+           Condition="!Exists('$(_SnippetRoot)\SewingEntry.cs')" />
+    <Error Text="Missing $(_SnippetRoot)\FinishingEntry.cs — add BuildSnippets from repo."
+           Condition="!Exists('$(_SnippetRoot)\FinishingEntry.cs')" />
+    <Error Text="Missing $(_SnippetRoot)\CuttingEntry.cs — add BuildSnippets from repo."
+           Condition="!Exists('$(_SnippetRoot)\CuttingEntry.cs')" />
+    <EnsurePipelineEntitiesUtf8 CoreRoot="$(MSBuildThisFileDirectory)" />
+  </Target>
+</Project>
