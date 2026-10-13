@@ -1,12 +1,12 @@
-# Flight X BD Aviation — Visiting Card (Ahmed Luthful Zamil)
+# Flight X BD Aviation — Visiting Card (Ahmed Lutful Zamil)
 
-Printable visiting card recreation based on the Flight X BD Aviation die-cut design, updated for **Ahmed Luthful Zamil**.
+Printable visiting card recreation based on the Flight X BD Aviation die-cut design, updated for **Ahmed Lutful Zamil**.
 
 ## Changes from the original
 
 | Field | Value |
 | --- | --- |
-| Name | Ahmed Luthful Zamil |
+| Name | Ahmed Lutful Zamil |
 | Mobile | +8801711118094 |
 | Phone | +880 9647138301, +880 2226640973 |
 | Email | flightxbd@gmail.com only |
