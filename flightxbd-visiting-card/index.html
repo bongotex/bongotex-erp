@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flight X BD Aviation — Ahmed Luthful Zamil Visiting Card</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Libre+Baskerville:wght@400;700&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --pearl: #f4f1ec;
+      --pearl-deep: #ebe6df;
+      --ink: #1a1a1a;
+      --red: #b50e1c;
+      --teal: #1f4a45;
+      --accent-blue: #5ba3c9;
+      --muted: #444;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Libre Baskerville", Georgia, serif;
+      background:
+        radial-gradient(ellipse at 20% 0%, #2a3340 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 100%, #1a222c 0%, transparent 45%),
+        #12171e;
+      color: var(--ink);
+      min-height: 100vh;
+      padding: 40px 24px 64px;
+    }
+
+    .page-header {
+      max-width: 980px;
+      margin: 0 auto 36px;
+      color: #e8eef5;
+      text-align: center;
+    }
+
+    .page-header h1 {
+      font-family: Montserrat, sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .page-header p {
+      margin-top: 8px;
+      opacity: 0.75;
+      font-size: 0.95rem;
+    }
+
+    .cards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .card-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .label {
+      font-family: Montserrat, sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #9db0c4;
+    }
+
+    /* Shared card shell — ~90×50mm visual proportion, scaled up */
+    .card {
+      position: relative;
+      width: 540px;
+      height: 300px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.55) 0%, transparent 40%),
+        linear-gradient(225deg, rgba(200,190,170,0.25) 0%, transparent 35%),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 2px,
+          rgba(0,0,0,0.015) 2px,
+          rgba(0,0,0,0.015) 3px
+        ),
+        linear-gradient(160deg, #f7f3ee 0%, #efe9e1 45%, #f5f1eb 100%);
+      color: var(--ink);
+      overflow: hidden;
+      box-shadow:
+        0 18px 40px rgba(0,0,0,0.35),
+        0 2px 0 rgba(255,255,255,0.4) inset;
+    }
+
+    /* Die-cut wavy right edge + circular hole for front */
+    .card.front {
+      clip-path: path(
+        "M 0,0 L 470,0 Q 490,0 505,18 Q 525,42 520,70 Q 515,95 535,115 Q 555,135 540,165 Q 525,195 540,225 Q 555,255 525,275 Q 505,290 480,300 L 0,300 Z"
+      );
+    }
+
+    .card.front::after {
+      content: "";
+      position: absolute;
+      top: 28px;
+      right: 42px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #12171e;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,0.15);
+      z-index: 5;
+    }
+
+    .front-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      height: 100%;
+      position: relative;
+    }
+
+    .front-grid::before {
+      content: "";
+      position: absolute;
+      top: 18px;
+      bottom: 18px;
+      left: 54%;
+      width: 1px;
+      background: rgba(0,0,0,0.18);
+    }
+
+    .offices {
+      padding: 28px 28px 28px 26px;
+      text-align: right;
+      font-size: 10.5px;
+      line-height: 1.45;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 18px;
+    }
+
+    .offices h3 {
+      font-size: 11.5px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .brand-panel {
+      padding: 24px 36px 20px 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+    }
+
+    .company {
+      font-family: Montserrat, sans-serif;
+      line-height: 1.05;
+      margin-bottom: 22px;
+      align-self: flex-start;
+      margin-left: 8px;
+    }
+
+    .company .fx {
+      display: block;
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: 0.04em;
+    }
+
+    .company .av {
+      display: block;
+      font-weight: 800;
+      font-size: 15px;
+      color: var(--red);
+      letter-spacing: 0.06em;
+    }
+
+    .person-name {
+      font-family: "Great Vibes", cursive;
+      font-size: 34px;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .name-rule {
+      width: 170px;
+      height: 1px;
+      background: var(--ink);
+      margin: 0 auto 18px;
+    }
+
+    .flight-mark {
+      width: 78px;
+      height: 78px;
+      align-self: flex-start;
+      margin-left: 4px;
+      margin-top: 4px;
+    }
+
+    .flight-mark svg {
+      width: 100%;
+      height: 100%;
+      fill: var(--teal);
+    }
+
+    /* Back card — portrait orientation matching reverse side */
+    .card.back {
+      width: 320px;
+      height: 520px;
+      clip-path: path(
+        "M 0,40 Q 40,10 90,28 Q 140,48 180,22 Q 220,0 260,18 Q 295,32 320,20 L 320,520 L 0,520 Z"
+      );
+      padding: 48px 22px 22px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card.back::after {
+      content: "";
+      position: absolute;
+      top: 52px;
+      right: 28px;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #12171e;
+      z-index: 5;
+    }
+
+    .services {
+      list-style: none;
+      font-size: 12px;
+      line-height: 1.55;
+      margin-bottom: 22px;
+      padding-right: 50px;
+    }
+
+    .services li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .services li::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-blue);
+      flex-shrink: 0;
+    }
+
+    .logos {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+      font-family: Montserrat, sans-serif;
+      font-size: 7px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      flex-wrap: wrap;
+    }
+
+    .logo-chip {
+      border: 1px solid rgba(0,0,0,0.2);
+      padding: 4px 6px;
+      border-radius: 2px;
+      background: rgba(255,255,255,0.45);
+      white-space: nowrap;
+    }
+
+    .logo-chip.atab { color: #1a4a8a; }
+    .logo-chip.atia { color: #222; }
+    .logo-chip.atas { color: #0d6e6e; }
+    .logo-chip.iata { color: #5b2d91; }
+
+    .back-brand {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .back-brand .fx {
+      font-family: Montserrat, sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: 0.03em;
+    }
+
+    .back-brand .av {
+      font-family: Montserrat, sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+      color: var(--red);
+      margin-left: 4px;
+    }
+
+    .tagline {
+      font-family: "Great Vibes", cursive;
+      font-size: 18px;
+      text-align: center;
+      margin-bottom: 16px;
+      opacity: 0.9;
+    }
+
+    .qr-row {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .qr-ring {
+      width: 88px;
+      height: 88px;
+      border: 1.5px solid rgba(0,0,0,0.35);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .qr-ring::before {
+      content: "Since · 2019";
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: Montserrat, sans-serif;
+      font-size: 7px;
+      letter-spacing: 0.08em;
+      background: var(--pearl);
+      padding: 0 4px;
+      white-space: nowrap;
+    }
+
+    .qr {
+      width: 58px;
+      height: 58px;
+      background:
+        repeating-conic-gradient(#111 0% 25%, #fff 0% 50%) 0 0 / 8px 8px;
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 1px #111;
+    }
+
+    .contact-block {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      font-size: 11.5px;
+    }
+
+    .contact-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--accent-blue);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+
+    .icon svg {
+      width: 9px;
+      height: 9px;
+      fill: #fff;
+    }
+
+    .web-line {
+      margin-top: 6px;
+      align-self: flex-end;
+      font-size: 11px;
+    }
+
+    .person-chip {
+      font-family: Montserrat, sans-serif;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 10px;
+      color: var(--muted);
+    }
+
+    .actions {
+      max-width: 980px;
+      margin: 40px auto 0;
+      text-align: center;
+    }
+
+    .actions button {
+      font-family: Montserrat, sans-serif;
+      background: #e8eef5;
+      color: #12171e;
+      border: none;
+      padding: 12px 22px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .actions button:hover { background: #fff; }
+
+    .notes {
+      max-width: 720px;
+      margin: 28px auto 0;
+      color: #9db0c4;
+      font-size: 0.85rem;
+      line-height: 1.55;
+      text-align: center;
+    }
+
+    .mockups {
+      max-width: 1100px;
+      margin: 48px auto 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .mockups figure {
+      margin: 0;
+      background: rgba(255,255,255,0.04);
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .mockups img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .mockups figcaption {
+      font-family: Montserrat, sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #9db0c4;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    @media (max-width: 700px) {
+      .card.front { width: min(540px, 100vw - 32px); height: auto; aspect-ratio: 540 / 300; }
+      .card.back { width: min(320px, 100vw - 48px); height: auto; aspect-ratio: 320 / 520; }
+      .mockups { grid-template-columns: 1fr; }
+      .offices { font-size: 9px; padding: 18px; }
+      .person-name { font-size: 26px; }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+      }
+      .page-header, .actions, .notes, .mockups, .label { display: none !important; }
+      .cards {
+        gap: 12mm;
+        padding: 10mm;
+      }
+      .card {
+        box-shadow: none;
+        break-inside: avoid;
+      }
+      .card.front::after,
+      .card.back::after {
+        background: #fff;
+        box-shadow: inset 0 0 0 1px #ccc;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="page-header">
+    <h1>Flight X BD Aviation — Visiting Card</h1>
+    <p>Ahmed Luthful Zamil · Print-ready layout + design mockups</p>
+  </header>
+
+  <div class="cards">
+    <!-- FRONT -->
+    <div class="card-wrap">
+      <span class="label">Front</span>
+      <article class="card front" aria-label="Visiting card front">
+        <div class="front-grid">
+          <section class="offices">
+            <div>
+              <h3>Bangladesh Office :</h3>
+              <p>Level-05, Suite# 609, 2 R.K Mission Road,</p>
+              <p>Motijheel, Dhaka-1203, Bangladesh.</p>
+              <p>+880 9647138301, +880 2226640973</p>
+              <p>Mob: +8801711118094</p>
+            </div>
+            <div>
+              <h3>Australia Office :</h3>
+              <p>Unit 48, 2-10 Tyler Street, Campbell Town,</p>
+              <p>Sydney, NSW-2560, Australia.</p>
+              <p>+61 425 370 470</p>
+            </div>
+          </section>
+          <section class="brand-panel">
+            <div class="company">
+              <span class="fx">FLIGHT X BD</span>
+              <span class="av">AVIATION</span>
+            </div>
+            <div class="person-name">Ahmed Luthful Zamil</div>
+            <div class="name-rule"></div>
+            <div class="flight-mark" aria-hidden="true">
+              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 72 C22 40, 38 22, 58 28 C72 32, 78 48, 68 58 C58 68, 42 62, 40 50 C38 36, 52 28, 68 34 C82 40, 90 28, 86 18" fill="none" stroke="#1f4a45" stroke-width="7" stroke-linecap="round"/>
+                <path d="M78 14 L94 8 L86 24 Z"/>
+                <path d="M30 78 Q48 70 62 78" fill="none" stroke="#1f4a45" stroke-width="5" stroke-linecap="round"/>
+              </svg>
+            </div>
+          </section>
+        </div>
+      </article>
+    </div>
+
+    <!-- BACK -->
+    <div class="card-wrap">
+      <span class="label">Back</span>
+      <article class="card back" aria-label="Visiting card back">
+        <ul class="services">
+          <li>Air Tickets</li>
+          <li>Visa Services</li>
+          <li>Holiday Packages</li>
+          <li>Corporate Travel Solutions</li>
+          <li>Student Consultancy</li>
+          <li>Hajj &amp; Umrah</li>
+        </ul>
+
+        <div class="logos" aria-label="Accreditation logos">
+          <span class="logo-chip atab">ATAB MEMBER</span>
+          <span class="logo-chip atia">ATIA</span>
+          <span class="logo-chip atas">ATAS</span>
+          <span class="logo-chip iata">IATA</span>
+        </div>
+
+        <div class="back-brand">
+          <span class="fx">FLIGHT X BD</span><span class="av">AVIATION</span>
+        </div>
+        <div class="tagline">Plan Right Fly Bright</div>
+        <div class="person-chip">Ahmed Luthful Zamil</div>
+
+        <div class="qr-row">
+          <div class="qr-ring" title="Replace with live QR linking to www.flightxbd.com">
+            <div class="qr" aria-label="QR code placeholder"></div>
+          </div>
+        </div>
+
+        <div class="contact-block">
+          <div class="contact-line">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.2 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8z"/></svg>
+            </span>
+            <span>+8801711118094</span>
+          </div>
+          <div class="contact-line">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.2 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8z"/></svg>
+            </span>
+            <span>+880 9647138301</span>
+          </div>
+          <div class="contact-line">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.2 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.3 1.1L6.6 10.8z"/></svg>
+            </span>
+            <span>+880 2226640973</span>
+          </div>
+          <div class="contact-line">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5L4 8V6l8 5 8-5v2z"/></svg>
+            </span>
+            <span>flightxbd@gmail.com</span>
+          </div>
+          <div class="contact-line web-line">
+            <span class="icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.9 9h-3.2a15 15 0 00-1.3-5 8 8 0 014.5 5zM12 4c.9 0 2.3 2.1 3 6H9c.7-3.9 2.1-6 3-6zM4.1 11h3.2a15 15 0 001.3-5 8 8 0 00-4.5 5zM7.3 13H4.1a8 8 0 004.5 5 15 15 0 01-1.3-5zm1.7 0h6c-.7 3.9-2.1 6-3 6s-2.3-2.1-3-6zm6.7 0h3.2a15 15 0 01-1.3 5 8 8 0 004.5-5h-3.2a15 15 0 001.3-5z"/></svg>
+            </span>
+            <span>www.flightxbd.com</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button type="button" onclick="window.print()">Print / Save as PDF</button>
+  </div>
+
+  <p class="notes">
+    Name updated to <strong style="color:#e8eef5;font-weight:600">Ahmed Luthful Zamil</strong>.
+    Mobile <strong style="color:#e8eef5;font-weight:600">+8801711118094</strong> added.
+    Office phones kept. All <em>ashfinahmed.com</em> links and emails removed.
+    QR on the HTML back is a placeholder — swap in a live code for www.flightxbd.com before print.
+  </p>
+
+  <section class="mockups" aria-label="Design mockups">
+    <figure>
+      <img src="mockups/front.jpg" alt="Front mockup — Ahmed Luthful Zamil visiting card" />
+      <figcaption>Design mockup — Front</figcaption>
+    </figure>
+    <figure>
+      <img src="mockups/back.jpg" alt="Back mockup — Flight X BD Aviation visiting card" />
+      <figcaption>Design mockup — Back</figcaption>
+    </figure>
+  </section>
+</body>
+</html>
